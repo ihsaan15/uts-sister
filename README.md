@@ -89,4 +89,4 @@ Aggregator memastikan idempotensi, namun tidak menjamin _global ordering_ lintas
 
 ## Demo Video
 
-Tambahkan link YouTube demo di sini setelah rekaman selesai.
+https://youtu.be/zv6usmpJGDw?si=ZWOkBnGmCVC2ooxi
