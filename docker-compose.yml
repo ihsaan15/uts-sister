@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  aggregator:
+    build: .
+    container_name: uts-aggregator
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - WORKER_COUNT=2
+      - QUEUE_MAXSIZE=0
+
+  publisher:
+    image: python:3.11-slim
+    container_name: uts-publisher
+    depends_on:
+      - aggregator
+    working_dir: /app
+    volumes:
+      - ./scripts:/app/scripts
+    environment:
+      - BASE_URL=http://aggregator:8080
+      - DUPLICATES_RATIO=0.2
+      - PUBLISH_TOPIC=load-test
+      - PYTHONUNBUFFERED=1
+    command:
+      [
+        "sh",
+        "-c",
+        "pip install --no-cache-dir httpx && python /app/scripts/publisher.py",
+      ]
